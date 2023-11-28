@@ -8,17 +8,18 @@
 --!               speed=2.0
 --!           Default configs: see below.
 --! \author   Purple4pur
---! \website  TODO
---! \version  0.1.0-dev
+--! \website  https://github.com/purple4pur/mpv-scripts
+--! \version  0.1.0
 --! \license  MIT
 
 -- default configs
 local opt = {
-    key = "\\", -- key binding
+    key = "END", -- key binding
     speed = 3.0, -- fast-forward speed
 }
 require("mp.options").read_options(opt, "fast-forward")
 
+-- checks on speed setting
 local msg = require("mp.msg")
 if opt.speed <= 0.0 then
     msg.error("invalid speed setting: " .. opt.speed)
@@ -27,6 +28,7 @@ elseif opt.speed < 1.0 then
     msg.warn("fast-forward speed (" .. opt.speed .. ") is slower than 1.0")
 end
 
+-- main function
 local normal_speed = 1.0
 local ffing = false
 function fast_forward(params)
@@ -50,4 +52,5 @@ function fast_forward(params)
     end
 end
 
+-- apply key binding
 mp.add_forced_key_binding(opt.key, "fast-forward", fast_forward, {complex = true})
